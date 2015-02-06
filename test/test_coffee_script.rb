@@ -29,7 +29,7 @@ class TestCoffeeScript < TestCase
 
   def test_compile_multiple_strings
     assert_match "puts('Hello, World!')",
-      CoffeeScript.compile("puts ", "'Hello, World!\n'")
+      CoffeeScript.compile("puts ", "'Hello, World!'\n")
   end
 
   def test_compile_with_bare_true
