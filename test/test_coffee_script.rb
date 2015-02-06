@@ -27,6 +27,11 @@ class TestCoffeeScript < TestCase
       CoffeeScript.compile(io)
   end
 
+  def test_compile_multiple_strings
+    assert_match "puts('Hello, World!')",
+      CoffeeScript.compile("puts ", "'Hello, World!\n'")
+  end
+
   def test_compile_with_bare_true
     assert_no_match "function()",
       CoffeeScript.compile("puts 'Hello, World!'\n", :bare => true)
@@ -35,6 +40,12 @@ class TestCoffeeScript < TestCase
   def test_compile_with_bare_false
     assert_match "function()",
       CoffeeScript.compile("puts 'Hello, World!'\n", :bare => false)
+  end
+
+  def test_compile_with_bare_true_and_multiple_strings
+    result = CoffeeScript.compile("puts ", "'Hello, World!'\n", :bare => true)
+    assert_match "puts('Hello, World!')", result
+    assert_no_match "function()", result
   end
 
   def test_compile_with_no_wrap_true

@@ -45,9 +45,14 @@ module CoffeeScript
     end
 
     # Compile a script (String or IO) to JavaScript.
-    def compile(script, options = {})
-      script = script.read if script.respond_to?(:read)
-
+    def compile(*scripts)
+      options = scripts.pop if scripts.last.is_a?(Hash)
+      options ||= {}
+      script = ''
+      scripts.each do |s|
+        s = s.read if s.respond_to?(:read)
+        script << s
+      end
       if options.key?(:bare)
       elsif options.key?(:no_wrap)
         options[:bare] = options[:no_wrap]
